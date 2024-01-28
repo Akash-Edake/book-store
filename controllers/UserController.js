@@ -11,13 +11,18 @@ const registerUser = async (req, res) => {
 
   // Generate a JWT token
   const token = auth.generateToken(user);
-  const userSave = createUser({
-    username,
-    password: hashedPassword,
-    jwt: token,
-  });
+  try{
 
-  res.status(201).json(userSave);
+      const userSave = createUser({
+        username,
+        password: hashedPassword,
+        jwt: token,
+      });
+    
+      res.status(201).json(userSave);
+  }catch(error){
+    res.send(error)
+  }
 };
 
 const loginUser = async (req, res) => {
